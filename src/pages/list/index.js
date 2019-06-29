@@ -1,59 +1,28 @@
-import React, { Fragment } from "react";
+import React, { Fragment, Component } from "react";
 import { Card } from "../../components/card";
+import Axios from "axios";
 
-const recipes = [
-  {
-    id: 1,
-    title: "Batata belga",
-    description: "Uma boa batata",
-    imageUrl:
-      "https://static.baratocoletivo.com.br/2017/0622/10012991/g_allfry-c4bbebed11.jpg",
-    ingredients: "Batata, óleo, sal."
-  },
-  {
-    id: 2,
-    title: "Batata belga",
-    description: "Uma boa batata",
-    imageUrl:
-      "https://static.baratocoletivo.com.br/2017/0622/10012991/g_allfry-c4bbebed11.jpg",
-    ingredients: "Batata, óleo, sal."
-  },
-  {
-    id: 3,
-    title: "Batata belga",
-    description: "Uma boa batata",
-    imageUrl:
-      "https://static.baratocoletivo.com.br/2017/0622/10012991/g_allfry-c4bbebed11.jpg",
-    ingredients: "Batata, óleo, sal."
-  },
-  {
-    id: 4,
-    title: "Batata belga",
-    description: "Uma boa batata",
-    imageUrl:
-      "https://static.baratocoletivo.com.br/2017/0622/10012991/g_allfry-c4bbebed11.jpg",
-    ingredients: "Batata, óleo, sal."
-  },
-  {
-    id: 5,
-    title: "Batata belga",
-    description: "Uma boa batata",
-    imageUrl:
-      "https://static.baratocoletivo.com.br/2017/0622/10012991/g_allfry-c4bbebed11.jpg",
-    ingredients: "Batata, óleo, sal."
-  },
-  {
-    id: 6,
-    title: "Batata belga",
-    description: "Uma boa batata",
-    imageUrl:
-      "https://static.baratocoletivo.com.br/2017/0622/10012991/g_allfry-c4bbebed11.jpg",
-    ingredients: "Batata, óleo, sal."
+class List  extends Component {
+
+  state = {
+    comidas: []
   }
-];
-const List = () => (
-  <Fragment>
-    {recipes.map(recipe => <Card key={recipe.id} {...recipe} />)}
-  </Fragment>
-);
+
+  // Sempre executa antes de renderizar
+  async componentDidMount() {
+    
+    const { data } = await Axios.get("http://localhost:4000/food");
+
+    this.setState({comidas: data})
+  }
+
+  render(){
+    return(
+      <Fragment>
+        {this.state.comidas.map(comida => <Card key={comida.id} {...comida} />)}
+      </Fragment>
+    )
+  }
+};
+
 export { List };
